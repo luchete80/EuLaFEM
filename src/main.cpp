@@ -1,4 +1,5 @@
 #include "Matrix.h"
+#include "Mesh.h"
 
 using namespace EuLa;
 void calculate_shape_matrices (const double &rg, const double &sg, Matrix &X2){
@@ -7,17 +8,17 @@ void calculate_shape_matrices (const double &rg, const double &sg, Matrix &X2){
 
   //Numerated as in Bathe
   Matrix Ns(1,4);
-  Ns.Set(0,0,(1+rg)*(1+sg));
-  Ns.Set(0,0,(1-rg)*(1+sg));
-  Ns.Set(0,0,(1-sg)*(1-rg));  
-  Ns.Set(0,0,(1+rg)*(1-sg));
+  Ns.Set(0,0,0.25*(1+rg)*(1+sg));
+  Ns.Set(0,0,0.25*(1-rg)*(1+sg));
+  Ns.Set(0,0,0.25*(1-sg)*(1-rg));  
+  Ns.Set(0,0,0.25*(1+rg)*(1-sg));
   // Ns  =0.25*matrix([(1+sg)*(1+rg),(1-rg)*(1+sg),(1-sg)*(1-rg),(1-sg)*(1+rg)])   
   Matrix dHrs(2,4);
   dHrs.Set(0,0,1+sg);  dHrs.Set(0,1,-(1+sg));  dHrs.Set(0,2,-(1-sg));  dHrs.Set(0,3,1-sg);
-  dHrs.Set(1,0,1+rg);  dHrs.Set(1,1,1-rg);  dHrs.Set(0,2,-(1-rg));  dHrs.Set(0,3,-(1+rg));
+  dHrs.Set(1,0,1+rg);  dHrs.Set(1,1,1-rg);    dHrs.Set(0,2,-(1-rg));  dHrs.Set(0,3,-(1+rg));
   //dHrs = 0.25 * dHrs;
-  Matrix J();
-  // J=dHrs*X2
+  Matrix J(2,2);
+  J=dHrs*X2;
   // dHxy=linalg.inv(J)*dHrs
   // detJ=linalg.det(J)
   // //Calculate shape functions
@@ -37,7 +38,11 @@ void calculate_shape_matrices (const double &rg, const double &sg, Matrix &X2){
       
 }
 
-int main(){
+int main() {
+  Matrix X2(4,2);  //Nodes
+  Mesh mesh; 
+  
+  
   
   return 0;
 }
