@@ -18,11 +18,17 @@ public:
         m_data[i][j] = 0.;
     }
 	}
+  ~Matrix(){
+    for (int i = 0; i < row_count; i++) 
+      delete[] m_data[i];
+    delete[] m_data;
+  }
 	double **m_data;	
 	
 	double ** Get(){return m_data;}
   inline void Set(const int &i, const int &j, const double &val){m_data[i][j] = val;}
   inline void Add(const int &i, const int &j, const double &val){m_data[i][j] += val;}
+  inline Matrix Inv();
 	inline double operator()(int i, int j){return m_data[i][j];}
 
 	
@@ -79,6 +85,15 @@ inline Matrix Identity(const int &c){
   for (int i=0;i<c;i++)
     ret.m_data[i][i]=1.;
   return ret;
+}
+
+inline Matrix Matrix::Inv(){
+  Matrix m(row_count,col_count);
+  if (row_count == 2 && col_count == 2){
+    
+  }
+  
+  return m;
 }
 
 };
